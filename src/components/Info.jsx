@@ -1,5 +1,6 @@
 import useFetch from "./UseFetch";
-import Avatar from "./Avatar";
+import { lazy, Suspense } from "react"
+const Avatar = lazy(() => import("./Avatar"))
 import LoadingSpinner from "./LoadingSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +31,9 @@ function Info() {
     <div className=" grid place-items-center border-secondary border-b md:mb-5  lg:w-11/12 lg:m-auto lg:mb-8">
       <div className="md:grid md:place-items-center lg:mt-5">
         <div className="flex justify-center items-center gap-3 font-medium text-lg mb-2 md:text-3xl lg:text-2xl">
-          <Avatar />
+          <Suspense>
+            <Avatar />
+          </Suspense>
           <p>Kenneth Bassey</p>
         </div>
         <div className="text-sm mb-2 md:text-2xl lg:text-base">
@@ -43,7 +46,7 @@ function Info() {
           <span className="text-secondary">|</span> Tailwindcss
         </div>
         <div className="ms-20 mb-2 md:text-2xl md:mt-2 md:mb-3 lg:text-xl">
-          Public Repository: {repoCount}
+          <Suspense>Public Repository: {repoCount}</Suspense>
         </div>
         <div className="flex gap-4 justify-center items-center mb-1 md:mb-3 md:gap-8">
           <a href="mailto:kbassey016@gmail.com" target="_blank">
@@ -53,7 +56,10 @@ function Info() {
             />
           </a>
           <a href="https://github.com/Kenbaz" target="_blank">
-            <FontAwesomeIcon className="w-6 h-6 md:w-10 md:h-10 lg:w-8 lg:h-8" icon={faGithub} />
+            <FontAwesomeIcon
+              className="w-6 h-6 md:w-10 md:h-10 lg:w-8 lg:h-8"
+              icon={faGithub}
+            />
           </a>
           <a
             href="https://www.linkedin.com/in/kenneth-bassey-593150251"

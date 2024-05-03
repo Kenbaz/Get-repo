@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "./Search";
+const SearchBar = lazy(() => import("./Search"))
 import useFetch from "./UseFetch";
 import LoadingSpinner from "./LoadingSpinner";
 import Modal from "./Modal";
@@ -78,11 +78,13 @@ const Repos = () => {
     <div className="fragment mt-2">
       <Helmet title="Repository Home" />
       <div className="flex justify-around absolute w-full top-5 lg:w-2/3">
-        <SearchBar
-          onSearch={setSearchQuery}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <Suspense>
+          <SearchBar
+            onSearch={setSearchQuery}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </Suspense>
         <button
           className="w-20 h-9 p-1 border-secondary text-sm hover:border-cyan-600 md:w-28 md:h-14 md:text-2xl lg:h-9 lg:text-sm lg:w-16 lg:absolute lg:-left-20 hidden lg:block lg:top-24"
           onClick={() => setIsModalOpen(true)}
@@ -111,63 +113,67 @@ const Repos = () => {
                 My Public Repositories
               </h2>
             )}
-            <div className="repo-wrapper text-sm grid gap-2 md:text-2xl md:gap-4 lg:text-base lg:repo-grid lg:mb-7">
-              {currentResults.map((repo) => (
-                <div
-                  className="repo-container border w-11/12 m-auto border-secondary rounded-md grid place-items-center lg:w-full lg:rounded-lg lg:h-64"
-                  key={repo.id}
-                >
-                  <h3 className="font-bold md:text-3xl mt-3 lg:text-xl lg:font-medium">
-                    {repo.name}
-                  </h3>
-                  <p className="m-1 mt-0 md:m-3">{repo.description}</p>
-                  <div className="mt-2 flex gap-2 mb-2 md:mb-3">
-                    <Link to={`/RepoDetails/${repo.id}`}>
+            <Suspense>
+              <div className="repo-wrapper text-sm grid gap-2 md:text-2xl md:gap-4 lg:text-base lg:repo-grid lg:mb-7">
+                {currentResults.map((repo) => (
+                  <div
+                    className="repo-container border w-11/12 m-auto border-secondary rounded-md grid place-items-center lg:w-full lg:rounded-lg lg:h-64"
+                    key={repo.id}
+                  >
+                    <h3 className="font-bold md:text-3xl mt-3 lg:text-xl lg:font-medium">
+                      {repo.name}
+                    </h3>
+                    <p className="m-1 mt-0 md:m-3">{repo.description}</p>
+                    <div className="mt-2 flex gap-2 mb-2 md:mb-3">
+                      <Link to={`/RepoDetails/${repo.id}`}>
+                        <button
+                          type="button"
+                          className="info-btn h-8 w-20 p-1 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
+                        >
+                          More Info
+                        </button>
+                      </Link>
                       <button
                         type="button"
-                        className="info-btn h-8 w-20 p-1 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
+                        className="delete-btn h-8 p-1 w-20 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
+                        onClick={() => handleDeleteRepo(repo.id)}
                       >
-                        More Info
+                        Delete
                       </button>
-                    </Link>
-                    <button
-                      type="button"
-                      className="delete-btn h-8 p-1 w-20 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
-                      onClick={() => handleDeleteRepo(repo.id)}
-                    >
-                      Delete
-                    </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Suspense>
           </div>
         )}
 
         {fetchResults && (
           <div className="pagination mt-5 mb-5 flex justify-center">
-            <button
-              className="h-8 p-1 w-20 bg-tinWhite text-gray-800 text-sm md:w-32 md:h-12 md:text-2xl lg:w-28 lg:h-10 lg:text-base"
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-            >
-              <FontAwesomeIcon className="mr-1" icon={faChevronLeft} />
-              Previous
-            </button>
-            <span className="m-1 text-sm md:m-2 md:text-2xl lg:text-base">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="h-8 py-0 w-20 text-sm bg-tinWhite text-gray-800 md:w-32 md:h-12 md:text-2xl md:py-1 lg:w-24 lg:h-10 lg:text-base relative"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-              <FontAwesomeIcon
-                className="ms-1 mt-2 md:absolute md:bottom-9 md:mt-2.5 md:left-9 lg:left-16 lg:top-0"
-                icon={faChevronRight}
-              />
-            </button>
+            <Suspense>
+              <button
+                className="h-8 p-1 w-20 bg-tinWhite text-gray-800 text-sm md:w-32 md:h-12 md:text-2xl lg:w-28 lg:h-10 lg:text-base"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                <FontAwesomeIcon className="mr-1" icon={faChevronLeft} />
+                Previous
+              </button>
+              <span className="m-1 text-sm md:m-2 md:text-2xl lg:text-base">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                className="h-8 py-0 w-20 text-sm bg-tinWhite text-gray-800 md:w-32 md:h-12 md:text-2xl md:py-1 lg:w-24 lg:h-10 lg:text-base relative"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+                <FontAwesomeIcon
+                  className="ms-1 mt-2 md:absolute md:bottom-9 md:mt-2.5 md:left-9 lg:left-16 lg:top-0"
+                  icon={faChevronRight}
+                />
+              </button>
+            </Suspense>
           </div>
         )}
       </div>

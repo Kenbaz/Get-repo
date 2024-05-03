@@ -17,7 +17,7 @@ function Home() {
           </main>
         </div>
       </div>
-      <footer className="border-secondary border-t mt-16 h-20 text-center p-5 font-light text-sm md:text-2xl lg:text-sm lg:text-start">
+      <footer className="border-secondary border-t mt-16 h-full w-full text-center p-5 font-light text-sm md:text-2xl lg:text-sm lg:text-start">
         &copy;{` Kenneth Bassey ${new Date().getFullYear()}`}
       </footer>
     </>
