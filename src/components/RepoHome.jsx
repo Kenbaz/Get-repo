@@ -125,7 +125,7 @@ const Repos = () => {
                     </h3>
                     <p className="m-1 mt-0 md:m-3">{repo.description}</p>
                     <div className="mt-2 flex gap-2 mb-2 md:mb-3">
-                      <Link to={`/RepoDetails/${repo.id}`}>
+                      <Link to={`/RepoDetails/${repo.id}`} title="View repository details">
                         <button
                           type="button"
                           className="info-btn h-8 w-20 p-1 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
