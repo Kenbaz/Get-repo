@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 import { useState } from "react";
 import SidebarSearchBar from "./SidebarSearch";
+import SidebarSkeleton from "./Skeletons/SidebarRepoSkeleton";
 
 function SidebarRepoList() {
   const [sidebarSearchQuery, setSidebarSearchQuery] = useState("");
@@ -15,9 +16,7 @@ function SidebarRepoList() {
 
   if (!data) {
     return (
-      <div className="loading relative top-52 left-40">
-        <LoadingSpinner />
-      </div>
+      <SidebarSkeleton/>
     );
   }
 

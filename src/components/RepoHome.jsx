@@ -11,6 +11,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
+import RepositoryHomeSkeleton from "./Skeletons/RepositioryHomeSkeleton";
 
 const Repos = () => {
   const [fetchResults, setFetchResults] = useState([]);
@@ -77,23 +78,8 @@ const Repos = () => {
   return (
     <div className="fragment mt-2">
       <Helmet title="Repository Home" />
-      <div className="flex justify-around absolute w-full top-5 lg:w-2/3">
-        <Suspense>
-          <SearchBar
-            onSearch={setSearchQuery}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </Suspense>
-        <button
-          className="w-20 h-9 p-1 border-secondary text-sm hover:border-cyan-600 md:w-28 md:h-14 md:text-2xl lg:h-9 lg:text-sm lg:w-16 lg:absolute lg:-left-20 hidden lg:block lg:top-24"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <FontAwesomeIcon icon={faPlus} /> New
-        </button>
-      </div>
 
-      <div className="main-repo-container w-11/12 rounded-lg m-auto transition ease-linear duration-500">
+      <div className="main-repo-container relative w-11/12 rounded-lg m-auto transition ease-linear duration-500">
         <Modal
           isOpen={isModalOpen}
           onSubmit={handleCreateRepo}
@@ -101,31 +87,50 @@ const Repos = () => {
         />
 
         {isLoading ? (
-          <div className="loading ms-40 mt-48 md:ms-80 md:mt-80 lg:relative lg:left-52">
-            <LoadingSpinner />
-          </div>
+          <RepositoryHomeSkeleton />
         ) : errorMessage ? (
           <div>{errorMessage}</div>
         ) : (
           <div className="all-repos-container grid place-items-center">
             {fetchResults && (
-              <h2 className="mb-3 text-lg font-semibold md:text-3xl md:mb-4 lg:text-2xl lg:mb-8">
-                My Public Repositories
-              </h2>
+              <>
+                <div className="flex justify-around w-11/12 m-auto mt-4 mb-4 lg:w-2/3">
+                  <Suspense>
+                    <SearchBar
+                      onSearch={setSearchQuery}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                    />
+                  </Suspense>
+                  <button
+                    className="h-9 w-20 hidden -ms-4 p-1 border-secondary text-sm hover:border-cyan-600 md:w-32 md:-ms-10 md:h-14 md:text-2xl lg:h-9 lg:text-sm lg:w-16 lg:absolute lg:-left-10 lg:-top-56"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} /> New
+                  </button>
+                </div>
+
+                <h2 className="mb-3 text-lg font-semibold md:text-3xl md:mb-8 lg:text-2xl lg:mb-8">
+                  My Public Repositories
+                </h2>
+              </>
             )}
             <Suspense>
               <div className="repo-wrapper text-sm grid gap-2 md:text-2xl md:gap-4 lg:text-base lg:repo-grid lg:mb-7">
                 {currentResults.map((repo) => (
                   <div
-                    className="repo-container border w-11/12 m-auto border-secondary rounded-md grid place-items-center lg:w-full lg:rounded-lg lg:h-64"
+                    className="repo-container border w-11/12 m-auto border-secondary rounded-md grid place-items-center lg:w-full lg:rounded-lg lg:h-80"
                     key={repo.id}
                   >
-                    <h3 className="font-bold md:text-3xl mt-3 lg:text-xl lg:font-medium">
+                    <h3 className="font-bold md:text-3xl mt-3 lg:text-xl lg:font-medium lg:-mb-2">
                       {repo.name}
                     </h3>
                     <p className="m-1 mt-0 md:m-3">{repo.description}</p>
-                    <div className="mt-2 flex gap-2 mb-2 md:mb-3">
-                      <Link to={`/RepoDetails/${repo.id}`} title="View repository details">
+                    <div className="flex gap-2 mb-2 md:mb-3">
+                      <Link
+                        to={`/RepoDetails/${repo.id}`}
+                        title="View repository details"
+                      >
                         <button
                           type="button"
                           className="info-btn h-8 w-20 p-1 bg-tinWhite text-gray-800 hover:border-cyan-600 md:w-32 md:h-12 lg:w-28 lg:h-10"
@@ -145,35 +150,32 @@ const Repos = () => {
                 ))}
               </div>
             </Suspense>
-          </div>
-        )}
-
-        {fetchResults && (
-          <div className="pagination mt-5 mb-5 flex justify-center">
-            <Suspense>
-              <button
-                className="h-8 p-1 w-20 bg-tinWhite text-gray-800 text-sm md:w-32 md:h-12 md:text-2xl lg:w-28 lg:h-10 lg:text-base"
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                <FontAwesomeIcon className="mr-1" icon={faChevronLeft} />
-                Previous
-              </button>
-              <span className="m-1 text-sm md:m-2 md:text-2xl lg:text-base">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                className="h-8 py-0 w-20 text-sm bg-tinWhite text-gray-800 md:w-32 md:h-12 md:text-2xl md:py-1 lg:w-24 lg:h-10 lg:text-base relative"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >
-                Next
-                <FontAwesomeIcon
-                  className="ms-1 mt-2 md:absolute md:bottom-9 md:mt-2.5 md:left-9 lg:left-16 lg:top-0"
-                  icon={faChevronRight}
-                />
-              </button>
-            </Suspense>
+            <div className="pagination mt-5 mb-5 flex justify-center">
+              <Suspense>
+                <button
+                  className="h-8 p-1 w-20 bg-tinWhite text-gray-800 text-sm md:w-32 md:h-12 md:text-2xl lg:w-28 lg:h-10 lg:text-base"
+                  onClick={handlePrevPage}
+                  disabled={currentPage === 1}
+                >
+                  <FontAwesomeIcon className="mr-1" icon={faChevronLeft} />
+                  Previous
+                </button>
+                <span className="m-1 text-sm md:m-2 md:text-2xl lg:text-base">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  className="h-8 py-0 w-20 text-sm bg-tinWhite text-gray-800 md:w-32 md:h-12 md:text-2xl md:py-1 lg:w-24 lg:h-10 lg:text-base relative"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                  <FontAwesomeIcon
+                    className="ms-1 md:absolute md:bottom-[9px] md:mt-2.5 lg:left-16 lg:-top-[-1.2px]"
+                    icon={faChevronRight}
+                  />
+                </button>
+              </Suspense>
+            </div>
           </div>
         )}
       </div>

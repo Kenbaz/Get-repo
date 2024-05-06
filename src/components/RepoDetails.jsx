@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpinner from "./LoadingSpinner";
 import { Helmet } from "react-helmet-async";
+import RepositoryDetailsSkeleton from "./Skeletons/RepositoryDetailsSkeleton";
 
 function RepoDetails() {
   const { id } = useParams();
@@ -58,9 +59,7 @@ function RepoDetails() {
 
   if (loading) {
     return (
-      <div className=" ms-44 mt-48 md:ms-96 lg:text-center lg:relative lg:right-60 lg:top-20">
-        <LoadingSpinner />
-      </div>
+      <RepositoryDetailsSkeleton/>
     );
   }
 

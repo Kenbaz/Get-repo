@@ -1,4 +1,3 @@
-// Import useState
 import { useState } from "react";
 
 function Modal({ isOpen, onSubmit, onClose }) {

@@ -5,6 +5,8 @@ import LoadingSpinner from "./LoadingSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import InfoSkeleton from "./Skeletons/InfoSkeleton";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function Info() {
   const { data, error } = useFetch("https://api.github.com/users/Kenbaz");
@@ -19,17 +21,15 @@ function Info() {
 
   if (!data) {
     return (
-      <div className="loading-readme ms-44 mt-20 md:ms-96 lg:relative lg:left-48">
-        <LoadingSpinner />
-      </div>
+        <InfoSkeleton />
     );
   }
 
   const repoCount = data.public_repos;
 
   return (
-    <div className=" grid place-items-center border-secondary border-b md:mb-5  lg:w-11/12 lg:m-auto lg:mb-8">
-      <div className="md:grid md:place-items-center lg:mt-5">
+    <div className="mt-3 grid place-items-center border-secondary border-b md:mb-5  lg:w-11/12 lg:m-auto lg:mb-4">
+      <div className="md:grid md:place-items-center lg:mt-8">
         <div className="flex justify-center items-center gap-3 font-medium text-lg mb-2 md:text-3xl lg:text-2xl">
           <Suspense>
             <Avatar />
