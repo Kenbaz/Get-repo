@@ -10,9 +10,9 @@ function SidebarSearchBar({ onSearch }) {
   }
 
   return (
-    <div className="w-3/4 rounded-md border border-secondary hover:border-cyan-700 lg:w-full lg:h-9">
+    <div className="w-full rounded-md border-2 border-secondary hover:border-cyan-700 h-full">
       <input
-        className="w-full rounded-md placeholder-gray-600 relative font-medium focus:outline-none lg:text-md md:pl-4 lg:h-9"
+        className="w-full h-full rounded-md placeholder-gray-800 bg-tinWhite text-gray-800 relative font-medium focus:outline-none lg:text-md md:pl-4"
         type="text"
         placeholder="Search repository..."
         value={searchQuery}

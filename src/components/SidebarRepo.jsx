@@ -31,7 +31,7 @@ function SidebarRepoList() {
       <div className="sidebar-container lg:mt-10">
         <h3 className="ms-4 mb-3 font-medium">Top Repositories</h3>
         
-        <div className="lg:border lg:w-11/12 lg:m-auto lg:h-10 lg:rounded-md border-secondary hover:border-cyan-600">
+        <div className="lg:w-11/12 lg:m-auto lg:h-10 lg:rounded-md">
           <SidebarSearchBar onSearch={setSidebarSearchQuery} />
         </div>
         <div className="sidebar-repo-wrapper ms-4 mt-2">
