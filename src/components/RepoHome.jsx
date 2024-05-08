@@ -2,11 +2,8 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 const SearchBar = lazy(() => import("./Search"))
 import useFetch from "./UseFetch";
-import LoadingSpinner from "./LoadingSpinner";
-import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlus,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +15,6 @@ const Repos = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4; // Number of items per page
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
 
@@ -60,31 +56,11 @@ const Repos = () => {
     );
   };
 
- const handleCreateRepo = (repoName, description) => {
-   const newRepo = {
-     id: Date.now(),
-     name: repoName,
-     description: description, 
-   };
-   setFetchResults((prevResults) => [...prevResults, newRepo]);
-   setIsModalOpen(false);
- };
-
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div className="fragment mt-2">
       <Helmet title="Repository Home" />
 
       <div className="main-repo-container relative w-11/12 rounded-lg m-auto transition ease-linear duration-500">
-        <Modal
-          isOpen={isModalOpen}
-          onSubmit={handleCreateRepo}
-          onClose={handleCloseModal}
-        />
 
         {isLoading ? (
           <RepositoryHomeSkeleton />
@@ -102,12 +78,6 @@ const Repos = () => {
                       setCurrentPage={setCurrentPage}
                     />
                   </Suspense>
-                  <button
-                    className="h-9 w-20 hidden -ms-4 p-1 border-secondary text-sm hover:border-cyan-600 md:w-32 md:-ms-10 md:h-14 md:text-2xl lg:h-9 lg:text-sm lg:w-16 lg:absolute lg:-left-10 lg:-top-56"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    <FontAwesomeIcon icon={faPlus} /> New
-                  </button>
                 </div>
 
                 <h2 className="mb-3 text-lg font-semibold md:text-3xl md:mb-8 lg:text-2xl lg:mb-8">

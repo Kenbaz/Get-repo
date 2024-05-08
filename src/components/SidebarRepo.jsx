@@ -1,6 +1,5 @@
 import useFetch from "./UseFetch";
 import { Link } from "react-router-dom";
-import LoadingSpinner from "./LoadingSpinner";
 import { useState } from "react";
 import SidebarSearchBar from "./SidebarSearch";
 import SidebarSkeleton from "./Skeletons/SidebarRepoSkeleton";

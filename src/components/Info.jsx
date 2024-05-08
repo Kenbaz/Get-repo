@@ -1,12 +1,10 @@
 import useFetch from "./UseFetch";
 import { lazy, Suspense } from "react"
 const Avatar = lazy(() => import("./Avatar"))
-import LoadingSpinner from "./LoadingSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import InfoSkeleton from "./Skeletons/InfoSkeleton";
-import { ChakraProvider } from "@chakra-ui/react";
 
 function Info() {
   const { data, error } = useFetch("https://api.github.com/users/Kenbaz");

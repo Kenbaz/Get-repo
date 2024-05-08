@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import LoadingSpinner from "./LoadingSpinner";
 import { Helmet } from "react-helmet-async";
 import RepositoryDetailsSkeleton from "./Skeletons/RepositoryDetailsSkeleton";
 
