@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 const SearchBar = lazy(() => import("./Search"))
 import useFetch from "./UseFetch";
