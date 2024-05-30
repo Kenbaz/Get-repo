@@ -27,6 +27,6 @@ function useFetch(url) {
   }, [url]);
     
     return { data, error, isLoading };
-};
+}
 
 export default useFetch;
