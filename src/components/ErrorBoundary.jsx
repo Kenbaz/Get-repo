@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamation} from "@fortawesome/free-solid-svg-icons";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -28,5 +29,9 @@ class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ErrorBoundary;
